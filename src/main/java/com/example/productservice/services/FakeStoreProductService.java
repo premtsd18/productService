@@ -1,13 +1,24 @@
 package com.example.productservice.services;
 
+
 import com.example.productservice.dtos.FakeStoreProductDTO;
 import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpMessageConverterExtractor;
+import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.http.HttpClient;
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.netty.handler.codec.rtsp.RtspHeaderValues.TIMEOUT;
 
 @Service
 public class FakeStoreProductService implements ProductService{
@@ -60,5 +71,21 @@ public class FakeStoreProductService implements ProductService{
         listProduct.add(convertFakeStoreProductToProduct(listProductDTO[0]));
         listProduct.add(convertFakeStoreProductToProduct(listProductDTO[1]));
         return  listProduct;
+    }
+
+    @Override
+    public Product updateProduct(Long id,Product product){
+        String url="https://fakestoreapi.com/products/" + id;
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(convertProductToFakeStoreProduct(product), FakeStoreProductDTO.class);
+        HttpMessageConverterExtractor<FakeStoreProductDTO> responseExtractor = new HttpMessageConverterExtractor<>(FakeStoreProductDTO.class, restTemplate.getMessageConverters());
+
+        FakeStoreProductDTO response= restTemplate.execute(url, HttpMethod.PATCH, requestCallback, responseExtractor);
+        return convertFakeStoreProductToProduct(response);
+
+    }
+
+    @Override
+    public Product replaceProduct(Long id,Product product){
+        return new Product();
     }
 }
