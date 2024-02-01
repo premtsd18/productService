@@ -20,7 +20,7 @@ import java.util.List;
 
 import static io.netty.handler.codec.rtsp.RtspHeaderValues.TIMEOUT;
 
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
     RestTemplate restTemplate;
 

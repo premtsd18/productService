@@ -4,8 +4,8 @@ import com.example.productservice.models.Product;
 
 import java.util.List;
 
-public interface ProductService {
-    Product getSingleProduct(Long id);
+public interface  ProductService {
+    Product getSingleProduct(Long id) throws Exception;
     Product createProduct(Product product);
     List<Product> getAllProducts();
 
