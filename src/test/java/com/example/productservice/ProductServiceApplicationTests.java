@@ -11,6 +11,9 @@ class ProductServiceApplicationTests {
 
     @Test
     void contextLoads() {
+        List<Product> findByTitle(){
+
+        }
     }
 
 }

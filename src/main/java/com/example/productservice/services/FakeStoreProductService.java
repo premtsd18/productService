@@ -6,6 +6,7 @@ import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -59,6 +60,8 @@ public class FakeStoreProductService implements ProductService{
         fakeStoreProductDTO=restTemplate.postForObject("https://fakestoreapi.com/products",fakeStoreProductDTO,FakeStoreProductDTO.class);
         return  convertFakeStoreProductToProduct(fakeStoreProductDTO);
     }
+
+    @Autowired
     FakeStoreProductService(RestTemplate restTemplate){
         this.restTemplate=restTemplate;
     }
@@ -86,6 +89,8 @@ public class FakeStoreProductService implements ProductService{
 
     @Override
     public Product replaceProduct(Long id,Product product){
+
+        int num=1/0;
         return new Product();
     }
 }
